@@ -1,5 +1,5 @@
 {
-    "name": "tochka/unification-address",
+    "name": "tochka-developers/unification-address",
     "license": "MIT",
     "description": "Раскладывание постового адреса в РФ на части",
     "autoload": {
@@ -14,7 +14,8 @@
     },
     "keywords": [
         "mailing address",
-        "parsing"
+        "parsing",
+        "dadata"
     ],
     "authors": [
         {
