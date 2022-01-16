@@ -1,17 +1,7 @@
 {
     "name": "tochka-developers/unification-address",
     "license": "MIT",
-    "description": "Раскладывание постового адреса в РФ на части",
-    "autoload": {
-        "psr-4": {
-            "Tochka\\Unif\\Address\\": "src/"
-        }
-    },
-    "autoload-dev": {
-        "classmap": [
-            "tests/"
-        ]
-    },
+    "description": "Splitting the postal address of the Russian Federation into parts",
     "keywords": [
         "mailing address",
         "parsing",
@@ -23,6 +13,16 @@
             "email": "kaspirovich@tochka.com"
         }
     ],
+    "autoload": {
+        "psr-4": {
+            "Tochka\\Unif\\Address\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "classmap": [
+            "tests/"
+        ]
+    },
     "minimum-stability": "dev",
     "require": {
         "php": ">=7.3",
