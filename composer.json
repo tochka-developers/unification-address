@@ -5,7 +5,10 @@
     "keywords": [
         "mailing address",
         "parsing",
-        "dadata"
+        "dadata",
+        "postal address",
+        "splitting",
+        "laravel"
     ],
     "authors": [
         {

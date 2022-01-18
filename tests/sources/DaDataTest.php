@@ -2,333 +2,29 @@
 
 namespace Tochka\Unif\Address\Tests\Sources;
 
-use PHPUnit\Framework\TestCase;
-use Tochka\Unif\Address\Contracts\SourceInterface as Contract;
-
-abstract class AbstractSource extends TestCase
+class DaDataTest extends AbstractSource
 {
 
-    public function providerAddress(): array
+    /**
+     * @testdox      resultHandler address
+     *
+     * @dataProvider providerAddressDaData
+     *
+     * @param $in
+     * @param $out
+     */
+    public function testAddress($in, $out): void
     {
-        return [
-            'set #1'  => [
-                [],
-                [
-                    'postindex'    => '115114',
-                    'city'         => 'Москва',
-                    'region'       => 'г Москва',
-                    'isSettlement' => false,
-                    'address'      => 'наб Дербеневская, д 11А, кв 311',
-                    'area'         => null,
-                    'street'       => 'наб Дербеневская',
-                    'house'        => '11А',
-                    'block'        => null,
-                    'flat'         => '311',
-                    'unparsed'     => null,
-                    'quality'      => Contract::QUALITY_GOOD,
-                ],
-            ],
-            'set #2'  => [
-                [],
-                [
-                    'postindex'    => '420100',
-                    'city'         => 'Казань',
-                    'region'       => 'Респ Татарстан',
-                    'address'      => 'ул Рашида Вагапова, д 3, кв 97',
-                    'isSettlement' => false,
-                    'area'         => null,
-                    'street'       => 'ул Рашида Вагапова',
-                    'house'        => '3',
-                    'block'        => null,
-                    'flat'         => '97',
-                    'unparsed'     => null,
-                    'quality'      => Contract::QUALITY_GOOD,
-                ],
-            ],
-            'set #3'  => [
-                [],
-                [
-                    'postindex'    => '626157',
-                    'city'         => 'Тобольск',
-                    'region'       => 'обл Тюменская',
-                    'address'      => 'мкр 7, д 99, кв 105',
-                    'area'         => null,
-                    'street'       => null,
-                    'house'        => '99',
-                    'block'        => null,
-                    'flat'         => '105',
-                    'isSettlement' => false,
-                    'unparsed'     => null,
-                    'quality'      => Contract::QUALITY_GOOD,
-                ],
-            ],
-            'set #4'  => [
-                [],
-                [
-                    'postindex'    => '187450',
-                    'city'         => 'Новая Ладога',
-                    'region'       => 'обл Ленинградская',
-                    'address'      => 'мкр В, д 34, кв 13',
-                    'area'         => 'р-н Волховский',
-                    'street'       => null,
-                    'house'        => '34',
-                    'block'        => null,
-                    'flat'         => '13',
-                    'isSettlement' => false,
-                    'unparsed'     => null,
-                    'quality'      => Contract::QUALITY_GOOD,
-                ],
-            ],
-            'set #5'  => [
-                [],
-                [
-                    'postindex'    => '654038',
-                    'city'         => 'Новокузнецк',
-                    'region'       => 'обл Кемеровская область - Кузбасс',
-                    'address'      => 'р-н Заводской, ул Тореза, д 13, кв 3',
-                    'area'         => null,
-                    'street'       => 'ул Тореза',
-                    'house'        => '13',
-                    'block'        => null,
-                    'flat'         => '3',
-                    'isSettlement' => false,
-                    'unparsed'     => null,
-                    'quality'      => Contract::QUALITY_GOOD,
-                ],
-            ],
-            'set #6'  => [
-                [],
-                [
-                    'postindex'    => '641010',
-                    'city'         => 'Нифанка',
-                    'region'       => 'обл Курганская',
-                    'address'      => 'ул 1 Мая, д 94',
-                    'area'         => 'р-н Щучанский',
-                    'street'       => 'ул 1 Мая',
-                    'house'        => '94',
-                    'block'        => null,
-                    'flat'         => null,
-                    'isSettlement' => true,
-                    'unparsed'     => null,
-                    'quality'      => Contract::QUALITY_GOOD,
-                ],
-            ],
-            'set #7'  => [
-                [],
-                [
-                    'postindex'    => '684017',
-                    'city'         => 'Светлый',
-                    'region'       => 'край Камчатский',
-//                    'address'      => 'мкр Молодежный (п Светлый), ул Невельского, д 21',
-                    'address'      => 'мкр Молодежный, ул Невельского, д 21',
-                    'area'         => 'р-н Елизовский',
-                    'street'       => 'ул Невельского',
-                    'house'        => '21',
-                    'block'        => null,
-                    'flat'         => null,
-                    'isSettlement' => true,
-                    'unparsed'     => null,
-                    'quality'      => Contract::QUALITY_GOOD,
-                ],
-            ],
-            'set #8'  => [
-                [],
-                [
-                    'postindex'    => '664058',
-                    'city'         => 'Маркова',
-                    'region'       => 'обл Иркутская',
-//                    'address'      => 'кв-л Стрижи (рп Маркова), д 4, кв 62',
-                    'address'      => 'кв-л Стрижи, д 4, кв 62',
-                    'area'         => 'р-н Иркутский',
-                    'street'       => null,
-                    'house'        => '4',
-                    'block'        => null,
-                    'flat'         => '62',
-                    'isSettlement' => true,
-                    'unparsed'     => null,
-                    'quality'      => Contract::QUALITY_GOOD,
-                ],
-            ],
-            'set #9'  => [
-                [],
-                [
-                    'postindex'    => '410039',
-                    'city'         => 'Саратов',
-                    'region'       => 'обл Саратовская',
-                    'address'      => 'мкр Шарковка, д 4, кв 64',
-                    'area'         => null,
-                    'street'       => null,
-                    'house'        => '4',
-                    'block'        => null,
-                    'flat'         => '64',
-                    'isSettlement' => false,
-                    'unparsed'     => null,
-                    'quality'      => Contract::QUALITY_GOOD,
-                ],
-            ],
-            'set #10' => [
-                [],
-                [
-                    'postindex'    => '303660',
-                    'city'         => 'Протасово',
-                    'region'       => 'обл Орловская',
-                    'address'      => 'ул Центральная, д 22',
-                    'area'         => 'р-н Краснозоренский',
-                    'street'       => 'ул Центральная',
-                    'house'        => '22',
-                    'block'        => null,
-                    'flat'         => null,
-                    'isSettlement' => true,
-                    'unparsed'     => null,
-                    'quality'      => Contract::QUALITY_GOOD,
-                ],
-            ],
-            'set #11' => [
-                [],
-                [
-                    'postindex'    => '652458',
-                    'city'         => 'Бердюгино',
-                    'region'       => 'обл Кемеровская область - Кузбасс',
-                    'address'      => 'ул Центральная, д 11, кв 1',
-                    'area'         => 'р-н Крапивинский',
-                    'street'       => 'ул Центральная',
-                    'house'        => '11',
-                    'block'        => null,
-                    'flat'         => '1',
-                    'isSettlement' => true,
-                    'unparsed'     => null,
-                    'quality'      => Contract::QUALITY_GOOD,
-                ],
-            ],
-            'set #12' => [
-                [],
-                [
-                    'postindex'    => '353780',
-                    'city'         => 'Калининская',
-                    'region'       => 'край Краснодарский',
-                    'address'      => 'ул Пролетарская, д 13',
-                    'area'         => 'р-н Калининский',
-                    'street'       => 'ул Пролетарская',
-                    'house'        => '13',
-                    'block'        => null,
-                    'flat'         => null,
-                    'isSettlement' => true,
-                    'unparsed'     => 'ОФ',
-                    'quality'      => Contract::QUALITY_NEED_CHECK,
-                ],
-            ],
-            'set #13' => [
-                [],
-                [
-                    'postindex'    => '143421',
-                    'city'         => 'Балтия',
-                    'region'       => 'обл Московская',
-                    'address'      => 'тер 26 км бизнес-центр Рига-Ленд, д 6',
-                    'area'         => 'р-н Красногорский',
-                    'street'       => 'тер 26 км бизнес-центр Рига-Ленд',
-                    'house'        => '6',
-                    'block'        => null,
-                    'flat'         => null,
-                    'isSettlement' => true,
-                    'unparsed'     => null,
-                    'quality'      => Contract::QUALITY_GOOD,
-                ],
-            ],
-            'set #14' => [
-                [],
-                [
-                    'postindex'    => '443528',
-                    'city'         => 'Стройкерамика',
-                    'region'       => 'обл Самарская',
-                    'address'      => 'ул Петра Монастырского, д 2',
-                    'area'         => 'р-н Волжский',
-                    'street'       => 'ул Петра Монастырского',
-                    'house'        => '2',
-                    'block'        => null,
-                    'flat'         => null,
-                    'unparsed'     => 'ПГТ ОЙКЕРАМИКА',
-                    'isSettlement' => true,
-                    'quality'      => Contract::QUALITY_NEED_CHECK,
-                ],
-            ],
-            'set #15' => [
-                [],
-                [
-                    'postindex'    => '346701',
-                    'city'         => 'Рыбацкий',
-                    'region'       => 'обл Ростовская',
-                    'address'      => 'ул 1-я Донская, д 9, кв 20',
-                    'area'         => 'р-н Аксайский',
-                    'street'       => 'ул 1-я Донская',
-                    'house'        => '9',
-                    'block'        => null,
-                    'flat'         => '20',
-                    'isSettlement' => true,
-                    'unparsed'     => null,
-                    'quality'      => Contract::QUALITY_GOOD,
-                ],
-            ],
-            'set #16' => [
-                [],
-                [
-                    'postindex'    => '143050',
-                    'city'         => 'Большие Вязёмы',
-                    'region'       => 'обл Московская',
-                    'address'      => 'ш Можайское, д 2, кв 29',
-                    'area'         => 'г Одинцово',
-                    'street'       => 'ш Можайское',
-                    'house'        => '2',
-                    'block'        => null,
-                    'flat'         => '29',
-                    'isSettlement' => true,
-                    'unparsed'     => null,
-                    'quality'      => Contract::QUALITY_GOOD,
-                ],
-            ],
-            'set #17' => [
-                [],
-                [
-                    'postindex'    => '399420',
-                    'city'         => 'Плавица',
-                    'region'       => 'обл Липецкая',
-                    'address'      => 'ул Строителей, д 2, кв 6',
-                    'area'         => 'р-н Добринский',
-                    'street'       => 'ул Строителей',
-                    'house'        => '2',
-                    'block'        => null,
-                    'flat'         => '6',
-                    'isSettlement' => true,
-                    'unparsed'     => null,
-                    'quality'      => Contract::QUALITY_GOOD,
-                ],
-            ],
-            'set #18' => [
-                [],
-                [
-                    'postindex'    => '142400',
-                    'city'         => 'Зимородок',
-                    'region'       => 'обл Московская',
-                    'address'      => 'д 196',
-                    'area'         => 'г Ногинск',
-                    'street'       => null,
-                    'house'        => '196',
-                    'block'        => null,
-                    'flat'         => null,
-                    'isSettlement' => true,
-                    'unparsed'     => null,
-                    'quality'      => Contract::QUALITY_NEED_CHECK,
-                ],
-            ],
-        ];
+        $this->assertEquals($out, (new \Tochka\Unif\Address\Sources\DaData([]))->resultHandler($in));
     }
 
     /**
      * Адреса для тестов
      * @return array
      */
-    /*public function providerAddressDaData(): array
+    public function providerAddressDaData(): array
     {
-        return [
+        $res = [
             'set #1'  => [
                 [
                     [
@@ -416,20 +112,7 @@ abstract class AbstractSource extends TestCase
                         'unparsed_parts'          => null,
                     ],
                 ],
-                [
-                    'postindex'    => '115114',
-                    'city'         => 'Москва',
-                    'region'       => 'г Москва',
-                    'isSettlement' => false,
-                    'address'      => 'наб Дербеневская, д 11А, кв 311',
-                    'area'         => null,
-                    'street'       => 'Дербеневская',
-                    'house'        => '11А',
-                    'block'        => null,
-                    'flat'         => '311',
-                    'unparsed'     => null,
-                    'quality'      => Contract::QUALITY_GOOD,
-                ],
+                [],
             ],
             'set #2'  => [
                 [
@@ -518,20 +201,7 @@ abstract class AbstractSource extends TestCase
                         'unparsed_parts'          => null,
                     ],
                 ],
-                [
-                    'postindex'    => '420100',
-                    'city'         => 'Казань',
-                    'region'       => 'Респ Татарстан',
-                    'address'      => 'ул Рашида Вагапова, д 3, кв 97',
-                    'isSettlement' => false,
-                    'area'         => null,
-                    'street'       => 'Рашида Вагапова',
-                    'house'        => '3',
-                    'block'        => null,
-                    'flat'         => '97',
-                    'unparsed'     => null,
-                    'quality'      => Contract::QUALITY_GOOD,
-                ],
+                [],
             ],
             'set #3'  => [
                 [
@@ -621,20 +291,7 @@ abstract class AbstractSource extends TestCase
                         'metro'                   => null,
                     ],
                 ],
-                [
-                    'postindex'    => '626157',
-                    'city'         => 'Тобольск',
-                    'region'       => 'Тюменская обл',
-                    'address'      => 'мкр 7, д 99, кв 105',
-                    'area'         => null,
-                    'street'       => null,
-                    'house'        => '99',
-                    'block'        => null,
-                    'flat'         => '105',
-                    'isSettlement' => true,
-                    'unparsed'     => null,
-                    'quality'      => Contract::QUALITY_GOOD,
-                ],
+                [],
             ],
             'set #4'  => [
                 [
@@ -724,20 +381,7 @@ abstract class AbstractSource extends TestCase
                         'metro'                   => null,
                     ],
                 ],
-                [
-                    'postindex'    => '187450',
-                    'city'         => 'Новая Ладога',
-                    'region'       => 'Ленинградская обл',
-                    'address'      => 'мкр В, д 34, кв 13',
-                    'area'         => 'Волховский р-н',
-                    'street'       => null,
-                    'house'        => '34',
-                    'block'        => null,
-                    'flat'         => '13',
-                    'isSettlement' => true,
-                    'unparsed'     => null,
-                    'quality'      => Contract::QUALITY_GOOD,
-                ],
+                [],
             ],
             'set #5'  => [
                 [
@@ -827,20 +471,7 @@ abstract class AbstractSource extends TestCase
                         'metro'                   => null,
                     ],
                 ],
-                [
-                    'postindex'    => '654038',
-                    'city'         => 'Новокузнецк',
-                    'region'       => 'Кемеровская область - Кузбасс',
-                    'address'      => 'р-н Заводской, ул Тореза, д 13, кв 3',
-                    'area'         => null,
-                    'street'       => 'Тореза',
-                    'house'        => '13',
-                    'block'        => null,
-                    'flat'         => '3',
-                    'isSettlement' => true,
-                    'unparsed'     => null,
-                    'quality'      => Contract::QUALITY_GOOD,
-                ],
+                [],
             ],
             'set #6'  => [
                 [
@@ -930,20 +561,7 @@ abstract class AbstractSource extends TestCase
                         'metro'                   => null,
                     ],
                 ],
-                [
-                    'postindex'    => '641010',
-                    'city'         => 'Нифанка',
-                    'region'       => 'Курганская обл',
-                    'address'      => 'ул 1 Мая, д 94',
-                    'area'         => 'Щучанский р-н',
-                    'street'       => '1 Мая',
-                    'house'        => '94',
-                    'block'        => null,
-                    'flat'         => null,
-                    'isSettlement' => true,
-                    'unparsed'     => null,
-                    'quality'      => Contract::QUALITY_GOOD,
-                ],
+                [],
             ],
             'set #7'  => [
                 [
@@ -1033,20 +651,7 @@ abstract class AbstractSource extends TestCase
                         'metro'                   => null,
                     ],
                 ],
-                [
-                    'postindex'    => '684017',
-                    'city'         => 'Светлый',
-                    'region'       => 'Камчатский край',
-                    'address'      => 'мкр Молодежный (п Светлый), ул Невельского, д 21',
-                    'area'         => 'Елизовский р-н',
-                    'street'       => 'Невельского',
-                    'house'        => '21',
-                    'block'        => null,
-                    'flat'         => null,
-                    'isSettlement' => true,
-                    'unparsed'     => null,
-                    'quality'      => Contract::QUALITY_GOOD,
-                ],
+                [],
             ],
             'set #8'  => [
                 [
@@ -1136,20 +741,7 @@ abstract class AbstractSource extends TestCase
                         'metro'                   => null,
                     ],
                 ],
-                [
-                    'postindex'    => '664058',
-                    'city'         => 'Маркова',
-                    'region'       => 'Иркутская обл',
-                    'address'      => 'кв-л Стрижи (рп Маркова), д 4, кв 62',
-                    'area'         => 'Иркутский р-н',
-                    'street'       => null,
-                    'house'        => '4',
-                    'block'        => null,
-                    'flat'         => '62',
-                    'isSettlement' => true,
-                    'unparsed'     => null,
-                    'quality'      => Contract::QUALITY_GOOD,
-                ],
+                [],
             ],
             'set #9'  => [
                 [
@@ -1239,20 +831,7 @@ abstract class AbstractSource extends TestCase
                         'metro'                   => null,
                     ],
                 ],
-                [
-                    'postindex'    => '410039',
-                    'city'         => 'Саратов',
-                    'region'       => 'Саратовская обл',
-                    'address'      => 'мкр Шарковка, д 4, кв 64',
-                    'area'         => null,
-                    'street'       => null,
-                    'house'        => '4',
-                    'block'        => null,
-                    'flat'         => '64',
-                    'isSettlement' => true,
-                    'unparsed'     => null,
-                    'quality'      => Contract::QUALITY_GOOD,
-                ],
+                [],
             ],
             'set #10' => [
                 [
@@ -1341,20 +920,7 @@ abstract class AbstractSource extends TestCase
                         'unparsed_parts'          => null,
                     ],
                 ],
-                [
-                    'postindex'    => '303660',
-                    'city'         => 'Протасово',
-                    'region'       => 'Орловская обл',
-                    'address'      => 'ул Центральная, д 22',
-                    'area'         => 'Краснозоренский р-н',
-                    'street'       => 'Центральная',
-                    'house'        => '22',
-                    'block'        => null,
-                    'flat'         => null,
-                    'isSettlement' => true,
-                    'unparsed'     => null,
-                    'quality'      => Contract::QUALITY_GOOD,
-                ],
+                [],
             ],
             'set #11' => [
                 [
@@ -1444,20 +1010,7 @@ abstract class AbstractSource extends TestCase
                         'metro'                   => null,
                     ],
                 ],
-                [
-                    'postindex'    => '652458',
-                    'city'         => 'Бердюгино',
-                    'region'       => 'Кемеровская область - Кузбасс',
-                    'address'      => 'ул Центральная, д 11, кв 1',
-                    'area'         => 'Крапивинский р-н',
-                    'street'       => 'Центральная',
-                    'house'        => '11',
-                    'block'        => null,
-                    'flat'         => '1',
-                    'isSettlement' => true,
-                    'unparsed'     => null,
-                    'quality'      => Contract::QUALITY_GOOD,
-                ],
+                [],
             ],
             'set #12' => [
                 [
@@ -1547,20 +1100,7 @@ abstract class AbstractSource extends TestCase
                         'metro'                   => null,
                     ],
                 ],
-                [
-                    'postindex'    => '353780',
-                    'city'         => 'Калининская',
-                    'region'       => 'Краснодарский край',
-                    'address'      => 'ул Пролетарская, д 13',
-                    'area'         => 'Калининский р-н',
-                    'street'       => 'Пролетарская',
-                    'house'        => '13',
-                    'block'        => null,
-                    'flat'         => null,
-                    'isSettlement' => true,
-                    'unparsed'     => 'ОФ',
-                    'quality'      => Contract::QUALITY_NEED_CHECK,
-                ],
+                [],
             ],
             'set #13' => [
                 [
@@ -1650,20 +1190,7 @@ abstract class AbstractSource extends TestCase
                         'metro'                   => null,
                     ],
                 ],
-                [
-                    'postindex'    => '143421',
-                    'city'         => 'Балтия',
-                    'region'       => 'Московская обл',
-                    'address'      => 'тер 26 км бизнес-центр Рига-Ленд, д 6',
-                    'area'         => 'Красногорский р-н',
-                    'street'       => '26 км бизнес-центр Рига-Ленд',
-                    'house'        => '6',
-                    'block'        => null,
-                    'flat'         => null,
-                    'isSettlement' => true,
-                    'unparsed'     => null,
-                    'quality'      => Contract::QUALITY_GOOD,
-                ],
+                [],
             ],
             'set #14' => [
                 [
@@ -1753,20 +1280,7 @@ abstract class AbstractSource extends TestCase
                         'metro'                   => null,
                     ],
                 ],
-                [
-                    'postindex'    => '443528',
-                    'city'         => 'Стройкерамика',
-                    'region'       => 'Самарская обл',
-                    'address'      => 'ул Петра Монастырского, д 2',
-                    'area'         => 'Волжский р-н',
-                    'street'       => 'Петра Монастырского',
-                    'house'        => '2',
-                    'block'        => null,
-                    'flat'         => null,
-                    'unparsed'     => 'ПГТ ОЙКЕРАМИКА',
-                    'isSettlement' => true,
-                    'quality'      => Contract::QUALITY_NEED_CHECK,
-                ],
+                [],
             ],
             'set #15' => [
                 [
@@ -1856,20 +1370,7 @@ abstract class AbstractSource extends TestCase
                         'metro'                   => null,
                     ],
                 ],
-                [
-                    'postindex'    => '346701',
-                    'city'         => 'Рыбацкий',
-                    'region'       => 'Ростовская обл',
-                    'address'      => 'ул 1-я Донская, д 9, кв 20',
-                    'area'         => 'Аксайский р-н',
-                    'street'       => '1-я Донская',
-                    'house'        => '9',
-                    'block'        => null,
-                    'flat'         => '20',
-                    'isSettlement' => true,
-                    'unparsed'     => null,
-                    'quality'      => Contract::QUALITY_GOOD,
-                ],
+                [],
             ],
             'set #16' => [
                 [
@@ -1959,20 +1460,7 @@ abstract class AbstractSource extends TestCase
                         'metro'                   => null,
                     ],
                 ],
-                [
-                    'postindex'    => '143050',
-                    'city'         => 'Большие Вязёмы',
-                    'region'       => 'Московская обл',
-                    'address'      => 'ш Можайское, д 2, кв 29',
-                    'area'         => 'г Одинцово',
-                    'street'       => 'Можайское',
-                    'house'        => '2',
-                    'block'        => null,
-                    'flat'         => '29',
-                    'isSettlement' => true,
-                    'unparsed'     => null,
-                    'quality'      => Contract::QUALITY_GOOD,
-                ],
+                [],
             ],
             'set #17' => [
                 [
@@ -2062,20 +1550,7 @@ abstract class AbstractSource extends TestCase
                         'metro'                   => null,
                     ],
                 ],
-                [
-                    'postindex'    => '399420',
-                    'city'         => 'Плавица',
-                    'region'       => 'Липецкая обл',
-                    'address'      => 'ул Строителей, д 2, кв 6',
-                    'area'         => 'Добринский р-н',
-                    'street'       => 'Строителей',
-                    'house'        => '2',
-                    'block'        => null,
-                    'flat'         => '6',
-                    'isSettlement' => true,
-                    'unparsed'     => null,
-                    'quality'      => Contract::QUALITY_GOOD,
-                ],
+                [],
             ],
             'set #18' => [
                 [
@@ -2165,21 +1640,11 @@ abstract class AbstractSource extends TestCase
                         'metro'                   => null,
                     ],
                 ],
-                [
-                    'postindex'    => '142400',
-                    'city'         => 'Зимородок',
-                    'region'       => 'Московская обл',
-                    'address'      => 'д 196',
-                    'area'         => 'г Ногинск',
-                    'street'       => null,
-                    'house'        => '196',
-                    'block'        => null,
-                    'flat'         => null,
-                    'isSettlement' => true,
-                    'unparsed'     => null,
-                    'quality'      => Contract::QUALITY_NEED_CHECK,
-                ],
+                [],
             ],
         ];
-    }*/
+
+        return array_replace_recursive($this->providerAddress(), $res);
+    }
+
 }

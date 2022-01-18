@@ -13,12 +13,13 @@ use Tochka\Unif\Address\Handlers\Processing;
 class UnifAddress
 {
     /**
-     * @param string $str
+     * @param null|string $str
      * @return void
      */
-    public function parsing(string $str): array
+    public function parsing(string $str): ?array
     {
         $key = str_replace(' ', '', class_basename(__CLASS__) . $str);
+
         return Cache::remember($key, (new Carbon())->addMonth(), function () use ($str) {
             return app(Pipeline::class)
                 ->send($str)

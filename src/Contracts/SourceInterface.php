@@ -9,7 +9,18 @@ interface SourceInterface
 
     public function __construct(array $authData);
 
-    public function processing(string $address): array;
+    /**
+     * Запрос в апи, обработка ошибки
+     *
+     * @param string $address
+     * @return array|null
+     */
+    public function processing(string $address): ?array;
 
+    /**
+     * Обработка сырых данные, приведение к формату
+     * @param array $results
+     * @return array
+     */
     public function resultHandler(array $results): array;
 }

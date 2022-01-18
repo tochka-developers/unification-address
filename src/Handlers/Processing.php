@@ -15,7 +15,7 @@ class Processing
                 if (class_exists($handler)) {
                     $address = (new $handler($authData))->processing($address);
 
-                    if ($address['quality'] === SourceInterface::QUALITY_GOOD) {
+                    if (isset($address['quality']) && $address['quality'] === SourceInterface::QUALITY_GOOD) {
                         return $next($address);
                     }
                 }

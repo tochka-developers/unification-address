@@ -6,8 +6,12 @@ namespace Tochka\Unif\Address\Sources;
 
 use GuzzleHttp\Client;
 use GuzzleHttp\RequestOptions;
+use Illuminate\Support\Facades\Log;
 use Tochka\Unif\Address\Contracts\SourceInterface;
 
+/**
+ * @link https://dadata.ru/api/clean/address/
+ */
 class DaData implements SourceInterface
 {
     public const HOST = 'https://dadata.ru';
@@ -27,22 +31,30 @@ class DaData implements SourceInterface
     /**
      * @throws \JsonException
      */
-    public function processing(string $address): array
+    public function processing(string $address): ?array
     {
         $uri = self::HOST . '/api/v2/clean/address';
 
         $response = (new Client())->post($uri, [
-            RequestOptions::HEADERS => [
+            RequestOptions::HEADERS     => [
                 'Authorization' => 'Token ' . $this->authData['token'],
                 'X-Secret'      => $this->authData['secret'],
             ],
-            RequestOptions::JSON    => [$address],
-            RequestOptions::TIMEOUT => 30,
+            RequestOptions::JSON        => [$address],
+            RequestOptions::TIMEOUT     => 30,
+            RequestOptions::HTTP_ERRORS => false,
         ]);
 
-        $body = (string)$response->getBody();
+        $body = $response->getBody()->getContents();
+        $data = json_decode($body, true, 512, JSON_THROW_ON_ERROR);
 
-        return $this->resultHandler(json_decode($body, true, 512, JSON_THROW_ON_ERROR));
+        if ($response->getStatusCode() !== 200) {
+            Log::channel(config('unif.logChannel'))
+                ->error('Source ' . class_basename(__CLASS__) . ' error', $data);
+            return null;
+        }
+
+        return $this->resultHandler($data);
     }
 
     public function resultHandler(array $results): array
@@ -55,10 +67,10 @@ class DaData implements SourceInterface
         $data['postindex'] = $raw['postal_code'];
 
         // регион, область, край, республика
-        $data['region'] = $raw['region_with_type'];
+        $data['region'] = $raw['region_type'] . ' ' . $raw['region'];
 
         // район в регионе
-        $data['area'] = $raw['area_with_type'];
+        $data['area'] = $raw['area'] !== null ? ($raw['area_type'] . ' ' . $raw['area']) : null;
 
         // город, населенный пункт
         $data['city'] = $raw['city'] ?? $raw['settlement'] ?? $raw['region'] ?? null;
@@ -84,13 +96,17 @@ class DaData implements SourceInterface
         }
 
         // Признак отправки не в город
-        $data['isSettlement'] = $raw['settlement'] !== null;
+        if ($raw['region_type_full'] === 'город') {
+            $data['isSettlement'] = false;
+        } else {
+            $data['isSettlement'] = !isset($raw['city_type_full']) || $raw['city_type_full'] !== 'город';
+        }
 
         // адрес
         $isMcR = $raw['settlement'] !== null
             && \in_array(mb_strtolower($raw['settlement_type']), ['кв-л', 'р-н', 'мкр', 'жилрайон'], true);
         if ($isMcR) {
-            $data['address'][] = $raw['settlement_with_type'];
+            $data['address'][] = trim(preg_replace('/\((.*?)\)/', '', $raw['settlement_with_type']));
         }
         if ($raw['street']) {
             $data['address'][] = $raw['street_with_type'];
@@ -107,7 +123,7 @@ class DaData implements SourceInterface
         $data['address'] = implode(', ', $data['address']);
 
         // улица
-        $data['street'] = $raw['street'];
+        $data['street'] = $raw['street_with_type'];
 
         // номер дома
         $data['house'] = $raw['house'];
@@ -122,11 +138,11 @@ class DaData implements SourceInterface
         $data['unparsed'] = $raw['unparsed_parts'] ?? null;
 
         // Качество распознавания адреса
-        $data['quality'] = \in_array(
-            $raw['qc_complete'],
-            [0, 10, 5, 8, 9],
-            true
-        ) ? self::QUALITY_GOOD : self::QUALITY_NEED_CHECK;
+        $data['quality'] =
+            \in_array($raw['qc_complete'], [0, 10, 5, 8], true)
+            || ($raw['qc_complete'] === 9 && !\in_array($raw['qc'], [1, 3], true))
+                ? self::QUALITY_GOOD
+                : self::QUALITY_NEED_CHECK;
 
         return $data;
     }
