@@ -432,6 +432,42 @@ class RusPostTest extends AbstractSource
                     'city'    => 'ДНП Зимородок',
                 ],
             ],
+            'set #19' => [
+                [
+                    [
+                        'address-guid'     => '6c93148b-2b42-41df-be24-86038fd334a9',
+                        'address-type'     => 'DEFAULT',
+                        'id'               => '295295912',
+                        'location'         => 'п Оболенск местность Район рп Оболенск улица Строителей стр9',
+                        'original-address' => '3005047 Москва г. г Курск ул Дейнеки, д 19кв, стр. ка, оф. кв 45',
+                        'place'            => 'г Серпухов',
+                        'place-guid'       => 'efc02a6a-273b-4a49-aef9-a5606ef8591c',
+                        'quality-code'     => 'UNDEF_03',
+                        'region'           => 'обл Московская',
+                        'region-guid'      => '29251dcf-00a1-4e34-98d4-5c47484a36d4',
+                        'validation-code'  => 'NOT_VALIDATED_HOUSE_WITHOUT_STREET_OR_NP',
+                    ],
+                ],
+                [],
+            ],
+            'set #20' => [
+                [
+                    [
+                        'address-type'     => 'PO_BOX',
+                        'id'               => '295295912',
+                        'index'            => '630126',
+                        'num-address-type' => '8',
+                        'original-address' => '630126 г.Новосибирск, а/я 8',
+                        'place'            => 'г Новосибирск',
+                        'place-guid'       => '8dea00e3-9aab-4d8e-887c-ef2aaa546456',
+                        'quality-code'     => 'POSTAL_BOX',
+                        'region'           => 'обл Новосибирская',
+                        'region-guid'      => '1ac46b49-3209-4814-b7bf-a509ea1aecd9',
+                        'validation-code'  => 'VALIDATED',
+                    ],
+                ],
+                [],
+            ],
         ];
 
         return array_replace_recursive($this->providerAddress(), $res);

@@ -13,15 +13,15 @@ class Processing
         if (!empty($handlers)) {
             foreach ($handlers as $handler => $authData) {
                 if (class_exists($handler)) {
-                    $address = (new $handler($authData))->processing($address);
-
-                    if (isset($address['quality']) && $address['quality'] === SourceInterface::QUALITY_GOOD) {
-                        return $next($address);
+                    $parseAddress = (new $handler($authData))->processing($address);
+                    if (isset($parseAddress['quality'])
+                        && $parseAddress['quality'] === SourceInterface::QUALITY_GOOD) {
+                        return $next($parseAddress);
                     }
                 }
             }
         }
 
-        return $next($address);
+        return $next(null);
     }
 }

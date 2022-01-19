@@ -96,6 +96,9 @@ class RusPost implements SourceInterface
         if (isset($raw['building'])) {
             $address[] = 'стр ' . $raw['building'];
         }
+        if (isset($raw['num-address-type']) && $raw['quality-code'] === 'POSTAL_BOX') {
+            $address[] = 'а/я ' . $raw['num-address-type'];
+        }
         $address = implode(', ', $address);
         if (isset($raw['letter'])) {
             $address .= $raw['letter'];
@@ -111,9 +114,6 @@ class RusPost implements SourceInterface
         }
         if (isset($raw['office'])) {
             $address .= ', офис ' . $raw['office'];
-        }
-        if (isset($raw['num-address-type']) && $raw['quality-code'] === 'POSTAL_BOX') {
-            $address .= ', а/я ' . $raw['num-address-type'];
         }
         $data['address'] = $address;
 
