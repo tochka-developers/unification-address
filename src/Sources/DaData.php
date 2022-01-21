@@ -123,7 +123,9 @@ class DaData implements SourceInterface
         if ($raw['postal_box']) {
             $data['address'][] = 'а/я ' . $raw['postal_box'];
         }
-        $data['address'] = implode(', ', $data['address']);
+        if (!empty($data['address'])) {
+            $data['address'] = implode(', ', $data['address']);
+        }
 
         // улица
         $data['street'] = $raw['street_with_type'];
