@@ -103,11 +103,11 @@ class RusPost implements SourceInterface
         if (isset($raw['letter'])) {
             $address .= $raw['letter'];
         }
-        if (isset($raw['corpus'])) {
-            $address .= mb_strtoupper($raw['corpus']);
-        }
         if (isset($raw['slash'])) {
             $address .= mb_strtoupper($raw['slash']);
+        }
+        if (isset($raw['corpus'])) {
+            $address .= ', к ' . mb_strtoupper($raw['corpus']);
         }
         if (isset($raw['room'])) {
             $address .= ', кв ' . $raw['room'];
@@ -125,11 +125,11 @@ class RusPost implements SourceInterface
         if (isset($raw['house'])) {
             $house[] = $raw['house'];
         }
-        if (isset($raw['corpus'])) {
-            $house[] = mb_strtoupper($raw['corpus']);
-        }
         if (isset($raw['slash'])) {
             $house[] = mb_strtoupper($raw['slash']);
+        }
+        if (isset($raw['corpus'])) {
+            $house[] = ' к ' . mb_strtoupper($raw['corpus']);
         }
         $data['house'] = implode('', $house);
 

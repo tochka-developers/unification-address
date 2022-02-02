@@ -24,7 +24,7 @@ class RusPostTest extends AbstractSource
     public function providerAddressRusPost(): array
     {
         $res = [
-            'set #1'  => [
+            'set #1'   => [
                 [
                     [
                         'address-type'     => 'DEFAULT',
@@ -46,7 +46,30 @@ class RusPostTest extends AbstractSource
                 ],
                 [],
             ],
-            'set #2'  => [
+            'set #1.1' => [
+                [
+                    [
+                        'address-guid'     => 'e4e65acd-61c6-41ce-8ef3-c0254fd07534',
+                        'address-type'     => 'DEFAULT',
+                        'corpus'           => '1',
+                        'house'            => '13/17',
+                        'id'               => '431',
+                        'index'            => '115114',
+                        'original-address' => '115114  г. Москва наб. Дербеневская, д. 13/17, стр. к. 1, оф. кв. 104',
+                        'place'            => 'г Москва',
+                        'place-guid'       => '0c5b2444-70a0-4932-980c-b4dc0d3f02b5',
+                        'quality-code'     => 'GOOD',
+                        'region'           => 'г Москва',
+                        'region-guid'      => '0c5b2444-70a0-4932-980c-b4dc0d3f02b5',
+                        'room'             => '104',
+                        'street'           => 'наб Дербеневская',
+                        'street-guid'      => '1d5cd93a-d4c8-48b4-a02c-d849882376c3',
+                        'validation-code'  => 'VALIDATED',
+                    ],
+                ],
+                [],
+            ],
+            'set #2'   => [
                 [
                     [
                         'address-guid'     => 'aa17ca5a-0ae4-4717-b3af-6ea2550c5aab',
@@ -68,7 +91,7 @@ class RusPostTest extends AbstractSource
                 ],
                 [],
             ],
-            'set #3'  => [
+            'set #3'   => [
                 [
                     [
                         'address-guid'     => '13b912ee-205d-4ed7-93b2-1b7b0339412c',
@@ -89,7 +112,7 @@ class RusPostTest extends AbstractSource
                 ],
                 [],
             ],
-            'set #4'  => [
+            'set #4'   => [
                 [
                     [
                         'address-guid'     => '93af4577-d394-4c5b-8295-07999a78dfb9',
@@ -111,7 +134,7 @@ class RusPostTest extends AbstractSource
                 ],
                 [],
             ],
-            'set #5'  => [
+            'set #5'   => [
                 [
                     [
                         'address-guid'     => '8847a2cb-977d-4273-bc89-f9c58e623973',
@@ -134,7 +157,7 @@ class RusPostTest extends AbstractSource
                 ],
                 [],
             ],
-            'set #6'  => [
+            'set #6'   => [
                 [
                     [
                         'address-guid'     => 'c54d87cf-f06b-440b-8266-67ae701bc836',
@@ -156,7 +179,7 @@ class RusPostTest extends AbstractSource
                 ],
                 [],
             ],
-            'set #7'  => [
+            'set #7'   => [
                 [
                     [
                         'address-guid'     => '23e52bb6-cd5c-4f0f-9d07-6c053abe13ab',
@@ -179,7 +202,7 @@ class RusPostTest extends AbstractSource
                 ],
                 [],
             ],
-            'set #8'  => [
+            'set #8'   => [
                 [
                     [
                         'address-guid'     => '987e125c-f979-48be-a828-360c5167a5dc',
@@ -201,7 +224,7 @@ class RusPostTest extends AbstractSource
                 ],
                 [],
             ],
-            'set #9'  => [
+            'set #9'   => [
                 [
                     [
                         'address-type'     => 'DEFAULT',
@@ -221,7 +244,7 @@ class RusPostTest extends AbstractSource
                 ],
                 [],
             ],
-            'set #10' => [
+            'set #10'  => [
                 [
                     [
                         'address-guid'     => '4a620c8a-f493-4c2b-a687-7b4f48595312',
@@ -243,7 +266,7 @@ class RusPostTest extends AbstractSource
                 ],
                 [],
             ],
-            'set #11' => [
+            'set #11'  => [
                 [
                     [
                         'address-type'     => 'DEFAULT',
@@ -265,7 +288,7 @@ class RusPostTest extends AbstractSource
                 ],
                 [],
             ],
-            'set #12' => [
+            'set #12'  => [
                 [
                     [
                         'address-guid'     => 'eae74ac3-b991-4082-863b-c9d5d4e69661',
@@ -290,7 +313,7 @@ class RusPostTest extends AbstractSource
                     'quality'  => Contract::QUALITY_GOOD,
                 ],
             ],
-            'set #13' => [
+            'set #13'  => [
                 [
                     [
                         'address-type'     => 'DEFAULT',
@@ -317,7 +340,7 @@ class RusPostTest extends AbstractSource
                     'address'      => 'тер автодорога Балтия, км 26-й, д 6',
                 ],
             ],
-            'set #14' => [
+            'set #14'  => [
                 [
                     [
                         'address-guid'     => 'b37e0e5a-2c9f-4d22-a1ef-b92a1ade6a94',
@@ -342,7 +365,7 @@ class RusPostTest extends AbstractSource
                     'quality'  => Contract::QUALITY_GOOD,
                 ],
             ],
-            'set #15' => [
+            'set #15'  => [
                 [
                     [
                         'address-type'     => 'DEFAULT',
@@ -364,7 +387,7 @@ class RusPostTest extends AbstractSource
                 ],
                 [],
             ],
-            'set #16' => [
+            'set #16'  => [
                 [
                     [
                         'address-guid'     => 'c13a72d3-22e4-4588-998c-568347d10772',
@@ -387,7 +410,7 @@ class RusPostTest extends AbstractSource
                 ],
                 [],
             ],
-            'set #17' => [
+            'set #17'  => [
                 [
                     [
                         'address-guid'     => 'b608a25c-2d64-4b62-8101-da976883a2cc',
@@ -410,7 +433,7 @@ class RusPostTest extends AbstractSource
                 ],
                 [],
             ],
-            'set #18' => [
+            'set #18'  => [
                 [
                     [
                         'address-type'     => 'DEFAULT',
@@ -432,7 +455,7 @@ class RusPostTest extends AbstractSource
                     'city'    => 'ДНП Зимородок',
                 ],
             ],
-            'set #19' => [
+            'set #19'  => [
                 [
                     [
                         'address-guid'     => '6c93148b-2b42-41df-be24-86038fd334a9',
@@ -450,7 +473,7 @@ class RusPostTest extends AbstractSource
                 ],
                 [],
             ],
-            'set #20' => [
+            'set #20'  => [
                 [
                     [
                         'address-type'     => 'PO_BOX',

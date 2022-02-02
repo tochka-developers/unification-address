@@ -28,7 +28,7 @@ class DaDataTest extends AbstractSource
     public function providerAddressDaData(): array
     {
         $res = [
-            'set #1'  => [
+            'set #1'   => [
                 [
                     [
                         'source'                  => '115114 г. Москва Москва г. наб. Дербеневская, д. 11 к А , 311',
@@ -115,9 +115,107 @@ class DaDataTest extends AbstractSource
                         'unparsed_parts'          => null,
                     ],
                 ],
-                [],
+                [
+                    'address' => 'наб Дербеневская, д 11А, кв 311',
+                    'house'   => '11А',
+                ],
             ],
-            'set #2'  => [
+            'set #1.1' => [
+                [
+                    [
+                        'source'                  => '115114  г. Москва наб. Дербеневская, д. 13/17, стр. к. 1, оф. кв. 104',
+                        'result'                  => 'г Москва, наб Дербеневская, д 13/17, кв 1',
+                        'postal_code'             => '115114',
+                        'country'                 => 'Россия',
+                        'country_iso_code'        => 'RU',
+                        'federal_district'        => 'Центральный',
+                        'region_fias_id'          => '0c5b2444-70a0-4932-980c-b4dc0d3f02b5',
+                        'region_kladr_id'         => '7700000000000',
+                        'region_iso_code'         => 'RU-MOW',
+                        'region_with_type'        => 'г Москва',
+                        'region_type'             => 'г',
+                        'region_type_full'        => 'город',
+                        'region'                  => 'Москва',
+                        'area_fias_id'            => null,
+                        'area_kladr_id'           => null,
+                        'area_with_type'          => null,
+                        'area_type'               => null,
+                        'area_type_full'          => null,
+                        'area'                    => null,
+                        'city_fias_id'            => null,
+                        'city_kladr_id'           => null,
+                        'city_with_type'          => null,
+                        'city_type'               => null,
+                        'city_type_full'          => null,
+                        'city'                    => null,
+                        'city_area'               => 'Южный',
+                        'city_district_fias_id'   => null,
+                        'city_district_kladr_id'  => null,
+                        'city_district_with_type' => 'р-н Даниловский',
+                        'city_district_type'      => 'р-н',
+                        'city_district_type_full' => 'район',
+                        'city_district'           => 'Даниловский',
+                        'settlement_fias_id'      => null,
+                        'settlement_kladr_id'     => null,
+                        'settlement_with_type'    => null,
+                        'settlement_type'         => null,
+                        'settlement_type_full'    => null,
+                        'settlement'              => null,
+                        'street_fias_id'          => '1d5cd93a-d4c8-48b4-a02c-d849882376c3',
+                        'street_kladr_id'         => '77000000000118200',
+                        'street_with_type'        => 'наб Дербеневская',
+                        'street_type'             => 'наб',
+                        'street_type_full'        => 'набережная',
+                        'street'                  => 'Дербеневская',
+                        'house_fias_id'           => null,
+                        'house_kladr_id'          => null,
+                        'house_type'              => 'д',
+                        'house_type_full'         => 'дом',
+                        'house'                   => '13/17',
+                        'block_type'              => null,
+                        'block_type_full'         => null,
+                        'block'                   => null,
+                        'entrance'                => null,
+                        'floor'                   => null,
+                        'flat_fias_id'            => null,
+                        'flat_type'               => 'кв',
+                        'flat_type_full'          => 'квартира',
+                        'flat'                    => '1',
+                        'flat_area'               => '258.8',
+                        'square_meter_price'      => '186494',
+                        'flat_price'              => '48264648',
+                        'postal_box'              => null,
+                        'fias_id'                 => '1d5cd93a-d4c8-48b4-a02c-d849882376c3',
+                        'fias_code'               => '77000000000000011820000',
+                        'fias_level'              => '7',
+                        'fias_actuality_state'    => '0',
+                        'kladr_id'                => '77000000000118200',
+                        'capital_marker'          => '0',
+                        'okato'                   => '45296559000',
+                        'oktmo'                   => '45914000',
+                        'tax_office'              => '7725',
+                        'tax_office_legal'        => '7725',
+                        'timezone'                => 'UTC+3',
+                        'geo_lat'                 => '55.7195318',
+                        'geo_lon'                 => '37.6496042',
+                        'beltway_hit'             => 'IN_MKAD',
+                        'beltway_distance'        => null,
+                        'qc_geo'                  => 1,
+                        'qc_complete'             => 9,
+                        'qc_house'                => 10,
+                        'qc'                      => 1,
+                        'unparsed_parts'          => 'Д, ОФ. КВ. 104',
+                    ],
+                ],
+                [
+                    'address'  => 'наб Дербеневская, д 13/17, кв 1',
+                    'house'    => '13/17',
+                    'flat'     => '1',
+                    'unparsed' => 'Д, ОФ. КВ. 104',
+                    'quality'  => 'need_check',
+                ],
+            ],
+            'set #2'   => [
                 [
                     [
                         'source'                  => '420100 Казань Рашида Вагапова, 3 - 97',
@@ -206,7 +304,7 @@ class DaDataTest extends AbstractSource
                 ],
                 [],
             ],
-            'set #3'  => [
+            'set #3'   => [
                 [
                     [
                         'source'                  => 'г. Тобольск Тюменская обл. мкр. 7, д. 99 - 105',
@@ -296,7 +394,7 @@ class DaDataTest extends AbstractSource
                 ],
                 [],
             ],
-            'set #4'  => [
+            'set #4'   => [
                 [
                     [
                         'source'                  => '187450 Волховский Новая Ладога В , ДОМ 34 - кв 13',
@@ -386,7 +484,7 @@ class DaDataTest extends AbstractSource
                 ],
                 [],
             ],
-            'set #5'  => [
+            'set #5'   => [
                 [
                     [
                         'source'                  => '654038 Новокузнецк  Заводской  Тореза, ДОМ 13 - кв 3',
@@ -476,7 +574,7 @@ class DaDataTest extends AbstractSource
                 ],
                 [],
             ],
-            'set #6'  => [
+            'set #6'   => [
                 [
                     [
                         'source'                  => '641010 Щучанский  Нифанка 1 Мая, ДОМ 94',
@@ -566,7 +664,7 @@ class DaDataTest extends AbstractSource
                 ],
                 [],
             ],
-            'set #7'  => [
+            'set #7'   => [
                 [
                     [
                         'source'                  => '684017 Камчатский край. п. Светлый ул. Невельского (Молодежный мкр), д. 21',
@@ -656,7 +754,7 @@ class DaDataTest extends AbstractSource
                 ],
                 [],
             ],
-            'set #8'  => [
+            'set #8'   => [
                 [
                     [
                         'source'                  => '664528 Иркутская обл. рп. Маркова кв-л. Стрижи, д. 4 - 62',
@@ -746,7 +844,7 @@ class DaDataTest extends AbstractSource
                 ],
                 [],
             ],
-            'set #9'  => [
+            'set #9'   => [
                 [
                     [
                         'source'                  => '410039 Саратов  Шарковка , ДОМ 4 - кв 64',
@@ -836,7 +934,7 @@ class DaDataTest extends AbstractSource
                 ],
                 [],
             ],
-            'set #10' => [
+            'set #10'  => [
                 [
                     [
                         'source'                  => '303660 Орловская д. Протасово ул Центральная, 22',
@@ -925,7 +1023,7 @@ class DaDataTest extends AbstractSource
                 ],
                 [],
             ],
-            'set #11' => [
+            'set #11'  => [
                 [
                     [
                         'source'                  => '652451 Крапивинский  Бердюгино Центральная, ДОМ 11 - кв 1',
@@ -1015,7 +1113,7 @@ class DaDataTest extends AbstractSource
                 ],
                 [],
             ],
-            'set #12' => [
+            'set #12'  => [
                 [
                     [
                         'source'                  => '353780 р-н Калининский ст-ца Калининская ул Пролетарская, д 13 - оф',
@@ -1105,7 +1203,7 @@ class DaDataTest extends AbstractSource
                 ],
                 [],
             ],
-            'set #13' => [
+            'set #13'  => [
                 [
                     [
                         'source'                  => '143421 Московская автодорога Балтия 26 км бизнес-центр Рига-Ленд, 6',
@@ -1195,7 +1293,7 @@ class DaDataTest extends AbstractSource
                 ],
                 [],
             ],
-            'set #14' => [
+            'set #14'  => [
                 [
                     [
                         'source'                  => '443528 пгт ойкерамика Петра Монастырского, 2',
@@ -1285,7 +1383,7 @@ class DaDataTest extends AbstractSource
                 ],
                 [],
             ],
-            'set #15' => [
+            'set #15'  => [
                 [
                     [
                         'source'                  => '346701 Аксайский  Рыбацкий 1-я Донская, ДОМ 9 - кв 20',
@@ -1375,7 +1473,7 @@ class DaDataTest extends AbstractSource
                 ],
                 [],
             ],
-            'set #16' => [
+            'set #16'  => [
                 [
                     [
                         'source'                  => '143050 р-н Одинцовский рп Большие Вязёмы ш Можайское, д 2 - кв. 29',
@@ -1465,7 +1563,7 @@ class DaDataTest extends AbstractSource
                 ],
                 [],
             ],
-            'set #17' => [
+            'set #17'  => [
                 [
                     [
                         'source'                  => '399420 р-н ДОБРИНСКИЙ ж/д_ст ПЛАВИЦА ул СТРОИТЕЛЕЙ, ДОМ 2 - кв. 6',
@@ -1555,7 +1653,7 @@ class DaDataTest extends AbstractSource
                 ],
                 [],
             ],
-            'set #18' => [
+            'set #18'  => [
                 [
                     [
                         'source'                  => '142434 тер. ДНП Зимородок -, 196',
@@ -1645,7 +1743,7 @@ class DaDataTest extends AbstractSource
                 ],
                 [],
             ],
-            'set #19' => [
+            'set #19'  => [
                 [
                     [
                         'source'                  => '3005047 Москва г. г Курск ул Дейнеки, д 19кв, стр. ка, оф. кв 45',
@@ -1743,7 +1841,7 @@ class DaDataTest extends AbstractSource
                     'unparsed'  => '3005047 МОСКВА, СТР. КА, ОФ. КВ 45',
                 ],
             ],
-            'set #20' => [
+            'set #20'  => [
                 [
                     [
                         'source'                  => '630126 г.Новосибирск, а/я 8',

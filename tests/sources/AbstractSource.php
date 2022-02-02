@@ -11,24 +11,41 @@ abstract class AbstractSource extends TestCase
     public function providerAddress(): array
     {
         return [
-            'set #1'  => [
+            'set #1'   => [
                 [],
                 [
                     'postindex'    => '115114',
                     'city'         => 'Москва',
                     'region'       => 'г Москва',
                     'isSettlement' => false,
-                    'address'      => 'наб Дербеневская, д 11А, кв 311',
+                    'address'      => 'наб Дербеневская, д 11, к А, кв 311',
                     'area'         => null,
                     'street'       => 'наб Дербеневская',
-                    'house'        => '11А',
+                    'house'        => '11 к А',
                     'block'        => null,
                     'flat'         => '311',
                     'unparsed'     => null,
                     'quality'      => Contract::QUALITY_GOOD,
                 ],
             ],
-            'set #2'  => [
+            'set #1.1' => [
+                [],
+                [
+                    'postindex'    => '115114',
+                    'region'       => 'г Москва',
+                    'area'         => null,
+                    'city'         => 'Москва',
+                    'isSettlement' => false,
+                    'address'      => 'наб Дербеневская, д 13/17, к 1, кв 104',
+                    'street'       => 'наб Дербеневская',
+                    'house'        => '13/17 к 1',
+                    'block'        => null,
+                    'flat'         => '104',
+                    'unparsed'     => null,
+                    'quality'      => Contract::QUALITY_GOOD,
+                ],
+            ],
+            'set #2'   => [
                 [],
                 [
                     'postindex'    => '420100',
@@ -45,7 +62,7 @@ abstract class AbstractSource extends TestCase
                     'quality'      => Contract::QUALITY_GOOD,
                 ],
             ],
-            'set #3'  => [
+            'set #3'   => [
                 [],
                 [
                     'postindex'    => '626157',
@@ -62,7 +79,7 @@ abstract class AbstractSource extends TestCase
                     'quality'      => Contract::QUALITY_GOOD,
                 ],
             ],
-            'set #4'  => [
+            'set #4'   => [
                 [],
                 [
                     'postindex'    => '187450',
@@ -79,7 +96,7 @@ abstract class AbstractSource extends TestCase
                     'quality'      => Contract::QUALITY_GOOD,
                 ],
             ],
-            'set #5'  => [
+            'set #5'   => [
                 [],
                 [
                     'postindex'    => '654038',
@@ -96,7 +113,7 @@ abstract class AbstractSource extends TestCase
                     'quality'      => Contract::QUALITY_GOOD,
                 ],
             ],
-            'set #6'  => [
+            'set #6'   => [
                 [],
                 [
                     'postindex'    => '641010',
@@ -113,7 +130,7 @@ abstract class AbstractSource extends TestCase
                     'quality'      => Contract::QUALITY_GOOD,
                 ],
             ],
-            'set #7'  => [
+            'set #7'   => [
                 [],
                 [
                     'postindex'    => '684017',
@@ -131,7 +148,7 @@ abstract class AbstractSource extends TestCase
                     'quality'      => Contract::QUALITY_GOOD,
                 ],
             ],
-            'set #8'  => [
+            'set #8'   => [
                 [],
                 [
                     'postindex'    => '664058',
@@ -149,7 +166,7 @@ abstract class AbstractSource extends TestCase
                     'quality'      => Contract::QUALITY_GOOD,
                 ],
             ],
-            'set #9'  => [
+            'set #9'   => [
                 [],
                 [
                     'postindex'    => '410039',
@@ -166,7 +183,7 @@ abstract class AbstractSource extends TestCase
                     'quality'      => Contract::QUALITY_GOOD,
                 ],
             ],
-            'set #10' => [
+            'set #10'  => [
                 [],
                 [
                     'postindex'    => '303660',
@@ -183,7 +200,7 @@ abstract class AbstractSource extends TestCase
                     'quality'      => Contract::QUALITY_GOOD,
                 ],
             ],
-            'set #11' => [
+            'set #11'  => [
                 [],
                 [
                     'postindex'    => '652458',
@@ -200,7 +217,7 @@ abstract class AbstractSource extends TestCase
                     'quality'      => Contract::QUALITY_GOOD,
                 ],
             ],
-            'set #12' => [
+            'set #12'  => [
                 [],
                 [
                     'postindex'    => '353780',
@@ -217,7 +234,7 @@ abstract class AbstractSource extends TestCase
                     'quality'      => Contract::QUALITY_NEED_CHECK,
                 ],
             ],
-            'set #13' => [
+            'set #13'  => [
                 [],
                 [
                     'postindex'    => '143421',
@@ -234,7 +251,7 @@ abstract class AbstractSource extends TestCase
                     'quality'      => Contract::QUALITY_GOOD,
                 ],
             ],
-            'set #14' => [
+            'set #14'  => [
                 [],
                 [
                     'postindex'    => '443528',
@@ -251,7 +268,7 @@ abstract class AbstractSource extends TestCase
                     'quality'      => Contract::QUALITY_NEED_CHECK,
                 ],
             ],
-            'set #15' => [
+            'set #15'  => [
                 [],
                 [
                     'postindex'    => '346701',
@@ -268,7 +285,7 @@ abstract class AbstractSource extends TestCase
                     'quality'      => Contract::QUALITY_GOOD,
                 ],
             ],
-            'set #16' => [
+            'set #16'  => [
                 [],
                 [
                     'postindex'    => '143050',
@@ -285,7 +302,7 @@ abstract class AbstractSource extends TestCase
                     'quality'      => Contract::QUALITY_GOOD,
                 ],
             ],
-            'set #17' => [
+            'set #17'  => [
                 [],
                 [
                     'postindex'    => '399420',
@@ -302,7 +319,7 @@ abstract class AbstractSource extends TestCase
                     'quality'      => Contract::QUALITY_GOOD,
                 ],
             ],
-            'set #18' => [
+            'set #18'  => [
                 [],
                 [
                     'postindex'    => '142400',
@@ -319,7 +336,7 @@ abstract class AbstractSource extends TestCase
                     'quality'      => Contract::QUALITY_NEED_CHECK,
                 ],
             ],
-            'set #19' => [
+            'set #19'  => [
                 [],
                 [
                     'postindex'    => null,
@@ -336,7 +353,7 @@ abstract class AbstractSource extends TestCase
                     'quality'      => Contract::QUALITY_NEED_CHECK,
                 ],
             ],
-            'set #20' => [
+            'set #20'  => [
                 [],
                 [
                     'postindex'    => '630126',
@@ -351,8 +368,8 @@ abstract class AbstractSource extends TestCase
                     'isSettlement' => false,
                     'unparsed'     => null,
                     'quality'      => Contract::QUALITY_GOOD,
-                ]
-            ]
+                ],
+            ],
         ];
     }
 }
