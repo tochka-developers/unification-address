@@ -471,7 +471,9 @@ class RusPostTest extends AbstractSource
                         'validation-code'  => 'NOT_VALIDATED_HOUSE_WITHOUT_STREET_OR_NP',
                     ],
                 ],
-                [],
+                [
+                    'isSettlement' => true,
+                ],
             ],
             'set #20'  => [
                 [

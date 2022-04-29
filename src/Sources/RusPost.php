@@ -85,7 +85,15 @@ class RusPost implements SourceInterface
         // адрес
         $address = [];
         if (isset($raw['location'])) {
-            $address[] = str_replace(['мкр.', 'тер.'], ['мкр', 'тер'], $raw['location']);
+            $location = str_replace(['мкр.', 'тер.'], ['мкр', 'тер'], $raw['location']);
+
+            $address[] = $location;
+
+            // случаи типа ст-ца Натухаевская, с. Нагаево и пр
+            $locations = explode(' ', $location);
+            if (isset($locations[0]) && !\in_array($locations[0], ['мкр', 'тер', 'р-н'], true)) {
+                $data['isSettlement'] = true;
+            }
         }
         if (isset($raw['street'])) {
             $address[] = $raw['street'];
