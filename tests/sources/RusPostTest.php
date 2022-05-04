@@ -336,7 +336,6 @@ class RusPostTest extends AbstractSource
                     'city'         => 'Красногорск',
                     'area'         => null,
                     'street'       => 'км 26-й',
-                    'isSettlement' => false,
                     'address'      => 'тер автодорога Балтия, км 26-й, д 6',
                 ],
             ],

@@ -91,7 +91,7 @@ class RusPost implements SourceInterface
 
             // случаи типа ст-ца Натухаевская, с. Нагаево и пр
             $locations = explode(' ', $location);
-            if (isset($locations[0]) && !\in_array($locations[0], ['мкр', 'тер', 'р-н'], true)) {
+            if (isset($locations[0]) && !\in_array($locations[0], ['мкр', 'р-н'], true)) {
                 $data['isSettlement'] = true;
             }
         }
