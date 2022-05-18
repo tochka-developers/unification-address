@@ -101,6 +101,9 @@ class RusPost implements SourceInterface
         if (isset($raw['house'])) {
             $address[] = 'д ' . $raw['house'];
         }
+        if (isset($raw['vladenie'])) {
+            $address[] = 'д ' . $raw['vladenie'];
+        }
         if (isset($raw['building'])) {
             $address[] = 'стр ' . $raw['building'];
         }
@@ -132,6 +135,9 @@ class RusPost implements SourceInterface
         $house = [];
         if (isset($raw['house'])) {
             $house[] = $raw['house'];
+        }
+        if (isset($raw['vladenie'])) {
+            $house[] = $raw['vladenie'];
         }
         if (isset($raw['slash'])) {
             $house[] = mb_strtoupper($raw['slash']);
