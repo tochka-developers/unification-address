@@ -60,6 +60,7 @@ class RusPost implements SourceInterface
     public function resultHandler(array $results): array
     {
         $data = [];
+        $isSettlement = false; // Признак отправки не в город
 
         $raw = array_shift($results);
 
@@ -67,20 +68,22 @@ class RusPost implements SourceInterface
         $data['postindex'] = $raw['index'] ?? null;
 
         // регион, область, край, республика
-        $data['region'] = $raw['region'] ?? null;
+        if (!empty($raw['region'])) {
+            $data['region'] = $raw['region'];
+            $isSettlement = mb_stripos($data['region'], 'москва') !== false
+                || mb_stripos($data['region'], 'петербург') !== false;
+        }
 
         // район в регионе
         $data['area'] = $raw['area'] ?? null;
 
         // город, населенный пункт
         if (isset($raw['place'])) {
-            $places = explode(' ', $raw['place']);
-            $cityType = array_shift($places);
-            $data['city'] = implode(' ', $places);
+            $placeParts = explode(' ', $raw['place']);
+            $cityType = array_shift($placeParts);
+            $data['city'] = implode(' ', $placeParts);
+            $isSettlement = $isSettlement === false && mb_strtolower(trim($cityType)) !== 'г';
         }
-
-        // Признак отправки не в город
-        $data['isSettlement'] = isset($cityType) && mb_strtolower(trim($cityType)) !== 'г';
 
         // адрес
         $address = [];
@@ -89,10 +92,10 @@ class RusPost implements SourceInterface
 
             $address[] = $location;
 
-            // случаи типа ст-ца Натухаевская, с. Нагаево и пр
-            $locations = explode(' ', $location);
-            if (isset($locations[0]) && !\in_array($locations[0], ['мкр', 'р-н'], true)) {
-                $data['isSettlement'] = true;
+            // Случаи типа ст-ца Натухаевская, с. Нагаево и пр
+            if ($isSettlement === false) {
+                $locations = explode(' ', $location);
+                $isSettlement = isset($locations[0]) && !\in_array($locations[0], ['мкр', 'р-н'], true);
             }
         }
         if (isset($raw['street'])) {
@@ -153,7 +156,11 @@ class RusPost implements SourceInterface
         // квартира/офис
         $data['flat'] = $raw['room'] ?? null;
 
+        // Не обработанная часть адреса
         $data['unparsed'] = null;
+
+        // Признак отправки не в город
+        $data['isSettlement'] = $isSettlement;
 
         $data['quality'] =
             \in_array($raw['quality-code'], ['GOOD', 'POSTAL_BOX', 'ON_DEMAND', 'UNDEF_05'])
