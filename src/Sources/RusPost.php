@@ -115,7 +115,7 @@ class RusPost implements SourceInterface
         }
         $address = implode(', ', $address);
         if (isset($raw['letter'])) {
-            $address .= $raw['letter'];
+            $address .= ', лит ' . $raw['letter'];
         }
         if (isset($raw['slash'])) {
             $address .= mb_strtoupper($raw['slash']);
