@@ -26,10 +26,15 @@ class RusPost implements SourceInterface
     }
 
     /**
+     * Обработка сырых данные, приведение к формату
+     *
+     * @param string $address Адрес строкой
+     * @param bool   $getRaw  Вернуть "сырые" данные, без обработки
+     * @return array|null
+     * @throws \GuzzleHttp\Exception\GuzzleException
      * @throws \JsonException
-     * @throws \Exception
      */
-    public function processing(string $address): ?array
+    public function processing(string $address, bool $getRaw = false): ?array
     {
         $uri = self::HOST . '/1.0/clean/address';
 
@@ -52,6 +57,10 @@ class RusPost implements SourceInterface
             Log::channel(config('unif.logChannel'))
                 ->error('Source ' . class_basename(__CLASS__) . ' error', $data);
             return null;
+        }
+
+        if ($getRaw) {
+            return $data;
         }
 
         return $this->resultHandler($data);
