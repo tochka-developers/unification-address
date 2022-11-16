@@ -136,7 +136,7 @@ class RusPost implements SourceInterface
             $address .= ', кв ' . $raw['room'];
         }
         if (isset($raw['office'])) {
-            $address .= ', офис ' . $raw['office'];
+            $address .= ', ' . $raw['office'];
         }
         $data['address'] = $address;
 

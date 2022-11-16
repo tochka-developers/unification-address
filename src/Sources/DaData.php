@@ -32,12 +32,42 @@ class DaData implements SourceInterface
      * Обработка сырых данные, приведение к формату
      *
      * @param string $address Адрес строкой
-     * @param bool   $getRaw Вернуть "сырые" данные, без обработки
+     * @param bool   $getRaw  Вернуть "сырые" данные, без обработки
      * @return array|null
      * @throws \GuzzleHttp\Exception\GuzzleException
      * @throws \JsonException
      */
     public function processing(string $address, bool $getRaw = false): ?array
+    {
+        $data = $this->sendRequest($address);
+
+        $data = array_shift($data);
+
+        if (empty($data)) {
+            return null;
+        }
+
+        if ($data['unparsed_parts']) {
+            $address = trim(preg_replace('/' . $data['unparsed_parts'] . '/iu', '', $address));
+
+            $data = $this->sendRequest($address);
+            $data = array_shift($data);
+        }
+
+        if ($getRaw) {
+            return $data;
+        }
+
+        return $this->resultHandler($data);
+    }
+
+    /**
+     * @param string $address
+     * @return array|null
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws \JsonException
+     */
+    private function sendRequest(string $address): ?array
     {
         $uri = self::HOST . '/api/v2/clean/address';
 
@@ -52,42 +82,35 @@ class DaData implements SourceInterface
         ]);
 
         $body = $response->getBody()->getContents();
-        $data = json_decode($body, true, 512, JSON_THROW_ON_ERROR);
 
         if ($response->getStatusCode() !== 200) {
             Log::channel(config('unif.logChannel'))
-                ->error('Source ' . class_basename(__CLASS__) . ' error', $data);
+                ->error('Source ' . class_basename(__CLASS__) . ' error', [$body]);
             return null;
         }
 
-        if ($getRaw) {
-            return $data;
-        }
-
-        return $this->resultHandler($data);
+        return json_decode($body, true, 512, JSON_THROW_ON_ERROR);
     }
 
     public function resultHandler(array $results): array
     {
         $data = [];
 
-        $raw = array_shift($results);
-
         // почтовый индекс
-        $data['postindex'] = $raw['postal_code'];
+        $data['postindex'] = $results['postal_code'];
 
         // регион, область, край, республика
-        $data['region'] = $raw['region_type'] . ' ' . $raw['region'];
+        $data['region'] = $results['region_type'] . ' ' . $results['region'];
 
         // район в регионе
-        $data['area'] = $raw['area'] !== null ? ($raw['area_type'] . ' ' . $raw['area']) : null;
+        $data['area'] = $results['area'] !== null ? ($results['area_type'] . ' ' . $results['area']) : null;
 
         // город, населенный пункт
-        $data['city'] = $raw['city'] ?? $raw['settlement'] ?? $raw['region'] ?? null;
-        if ($raw['settlement'] !== null) {
-            if (preg_match('/(.*?) \((.*?) (.*?)\)/su', $raw['settlement'], $matches) && isset($matches[3])) {
+        $data['city'] = $results['city'] ?? $results['settlement'] ?? $results['region'] ?? null;
+        if ($results['settlement'] !== null) {
+            if (preg_match('/(.*?) \((.*?) (.*?)\)/su', $results['settlement'], $matches) && isset($matches[3])) {
                 $data['city'] = $matches[3];
-            } elseif (\in_array(mb_strtolower($raw['settlement_type']), [
+            } elseif (\in_array(mb_strtolower($results['settlement_type']), [
                 'с',
                 'п',
                 'д',
@@ -101,61 +124,61 @@ class DaData implements SourceInterface
                 'тер. днп',
                 'дп',
             ], true)) {
-                $data['city'] = $raw['settlement'];
+                $data['city'] = $results['settlement'];
             }
         }
 
         // Признак отправки не в город
-        if ($raw['region_type_full'] === 'город') {
+        if ($results['region_type_full'] === 'город') {
             $data['isSettlement'] = false;
         } else {
-            $data['isSettlement'] = !isset($raw['city_type_full']) || $raw['city_type_full'] !== 'город';
+            $data['isSettlement'] = !isset($results['city_type_full']) || $results['city_type_full'] !== 'город';
         }
 
         // адрес
-        $isMcR = $raw['settlement'] !== null
-            && \in_array(mb_strtolower($raw['settlement_type']), ['кв-л', 'р-н', 'мкр', 'жилрайон'], true);
+        $isMcR = $results['settlement'] !== null
+            && \in_array(mb_strtolower($results['settlement_type']), ['кв-л', 'р-н', 'мкр', 'жилрайон'], true);
         if ($isMcR) {
-            $data['address'][] = trim(preg_replace('/\((.*?)\)/', '', $raw['settlement_with_type']));
+            $data['address'][] = trim(preg_replace('/\((.*?)\)/', '', $results['settlement_with_type']));
         }
-        if ($raw['street']) {
-            $data['address'][] = $raw['street_with_type'];
+        if ($results['street']) {
+            $data['address'][] = $results['street_with_type'];
         }
-        if ($raw['house']) {
-            $data['address'][] = $raw['house_type'] . ' ' . $raw['house'];
+        if ($results['house']) {
+            $data['address'][] = $results['house_type'] . ' ' . $results['house'];
         }
-        if ($raw['block']) {
-            $data['address'][] = $raw['block_type_full'] . ' ' . $raw['block'];
+        if ($results['block']) {
+            $data['address'][] = $results['block_type_full'] . ' ' . $results['block'];
         }
-        if ($raw['flat']) {
-            $data['address'][] = $raw['flat_type'] . ' ' . $raw['flat'];
+        if ($results['flat']) {
+            $data['address'][] = $results['flat_type'] . ' ' . $results['flat'];
         }
-        if ($raw['postal_box']) {
-            $data['address'][] = 'а/я ' . $raw['postal_box'];
+        if ($results['postal_box']) {
+            $data['address'][] = 'а/я ' . $results['postal_box'];
         }
         if (!empty($data['address'])) {
             $data['address'] = implode(', ', $data['address']);
         }
 
         // улица
-        $data['street'] = $raw['street_with_type'];
+        $data['street'] = $results['street_with_type'];
 
         // номер дома
-        $data['house'] = $raw['house'];
+        $data['house'] = $results['house'];
 
         // корпус/строение
-        $data['block'] = $raw['block'];
+        $data['block'] = $results['block'];
 
         // квартира/офис
-        $data['flat'] = $raw['flat'];
+        $data['flat'] = $results['flat'];
 
         // нераспознанная часть адреса
-        $data['unparsed'] = $raw['unparsed_parts'] ?? null;
+        $data['unparsed'] = $results['unparsed_parts'] ?? null;
 
         // Качество распознавания адреса
         $data['quality'] =
-            \in_array($raw['qc_complete'], [0, 10, 5, 8], true)
-            || ($raw['qc_complete'] === 9 && !\in_array($raw['qc'], [1, 3], true))
+            \in_array($results['qc_complete'], [0, 10, 5, 8], true)
+            || ($results['qc_complete'] === 9 && !\in_array($results['qc'], [1, 3], true))
                 ? self::QUALITY_GOOD
                 : self::QUALITY_NEED_CHECK;
 
