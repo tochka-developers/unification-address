@@ -40,18 +40,18 @@ class DaData implements SourceInterface
     public function processing(string $address, bool $getRaw = false): ?array
     {
         $data = $this->sendRequest($address);
-
         $data = array_shift($data);
-
         if (empty($data)) {
             return null;
         }
 
-        if ($data['unparsed_parts']) {
+        if (!empty($data['unparsed_parts'])) {
             $address = trim(preg_replace('/' . $data['unparsed_parts'] . '/iu', '', $address));
-
             $data = $this->sendRequest($address);
             $data = array_shift($data);
+            if (empty($data)) {
+                return null;
+            }
         }
 
         if ($getRaw) {
@@ -106,7 +106,7 @@ class DaData implements SourceInterface
         $data['area'] = $results['area'] !== null ? ($results['area_type'] . ' ' . $results['area']) : null;
 
         // город, населенный пункт
-        $data['city'] = $results['city'] ?? $results['settlement'] ?? $results['region'] ?? null;
+        $data['city'] = $results['city'] ?? $results['settlement'] ?? $results['area'] ?? $results['region'] ?? null;
         if ($results['settlement'] !== null) {
             if (preg_match('/(.*?) \((.*?) (.*?)\)/su', $results['settlement'], $matches) && isset($matches[3])) {
                 $data['city'] = $matches[3];
