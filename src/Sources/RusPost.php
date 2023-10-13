@@ -163,9 +163,10 @@ class RusPost implements SourceInterface
         $data['block'] = $raw['block'] ?? null;
 
         // квартира/офис
-        $data['flat'] = $raw['room']
-            ?? !empty($raw['office']) && str_replace('оф. ', '', $raw['office'])
-            ?? null;
+        $data['flat'] = $raw['room'] ?? null;
+        if (empty($data['flat']) && !empty($raw['office'])) {
+            $data['flat'] = str_replace('оф. ', '', $raw['office']);
+        }
 
         // Не обработанная часть адреса
         $data['unparsed'] = null;
