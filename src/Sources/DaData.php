@@ -52,11 +52,7 @@ class DaData implements SourceInterface
             return null;
         }
 
-        if ($getRaw) {
-            return $data;
-        }
-
-        return $this->resultHandler($data);
+        return $getRaw ? $data : $this->resultHandler($data);
     }
 
     /**
