@@ -43,7 +43,7 @@ class DaData implements SourceInterface
         $data = array_shift($data);
 
         if (!empty($data['unparsed_parts'])) {
-            $address = trim(preg_replace('%' . $data['unparsed_parts'] . '%iu', '', $address));
+            $address = trim(preg_replace('%' . preg_quote($data['unparsed_parts']) . '%iu', '', $address));
             $data = $this->sendRequest($address);
             $data = array_shift($data);
         }
