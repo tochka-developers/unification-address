@@ -111,29 +111,29 @@ class RusPost implements SourceInterface
             $address[] = $raw['street'];
         }
         if (isset($raw['house'])) {
-            $address[] = 'д ' . $raw['house'];
+            $address[] = $raw['house'];
         }
         if (isset($raw['vladenie'])) {
             $address[] = 'д ' . $raw['vladenie'];
-        }
-        if (isset($raw['building'])) {
-            $address[] = 'стр ' . $raw['building'];
         }
         if (isset($raw['num-address-type']) && $raw['quality-code'] === 'POSTAL_BOX') {
             $address[] = 'а/я ' . $raw['num-address-type'];
         }
         $address = implode(', ', $address);
+        if (isset($raw['corpus'])) {
+            $address .= ', корп. ' . mb_strtoupper($raw['corpus']);
+        }
+        if (isset($raw['building'])) {
+            $address .= ', ' . $raw['building'];
+        }
         if (isset($raw['letter'])) {
-            $address .= ', лит ' . $raw['letter'];
+            $address .= ', ' . $raw['letter'];
         }
         if (isset($raw['slash'])) {
             $address .= mb_strtoupper($raw['slash']);
         }
-        if (isset($raw['corpus'])) {
-            $address .= ', к ' . mb_strtoupper($raw['corpus']);
-        }
         if (isset($raw['room'])) {
-            $address .= ', кв ' . $raw['room'];
+            $address .= ', ' . $raw['room'];
         }
         if (isset($raw['office'])) {
             $address .= ', ' . $raw['office'];
@@ -155,7 +155,7 @@ class RusPost implements SourceInterface
             $house[] = mb_strtoupper($raw['slash']);
         }
         if (isset($raw['corpus'])) {
-            $house[] = ' к ' . mb_strtoupper($raw['corpus']);
+            $house[] = ' корп. ' . mb_strtoupper($raw['corpus']);
         }
         $data['house'] = implode('', $house);
 
